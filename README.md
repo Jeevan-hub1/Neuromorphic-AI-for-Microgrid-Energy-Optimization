@@ -30,6 +30,6 @@ This repository implements a novel energy optimization system for small-scale mi
 
 ## Installation
 ```bash
-git clone https://github.com/<your-username>/Neuromorphic-Microgrid-Optimization.git
+git clone https://github.com/Jeevan-hub1/Neuromorphic-Microgrid-Optimization.git
 cd Neuromorphic-Microgrid-Optimization
 pip install -r requirements.txt
