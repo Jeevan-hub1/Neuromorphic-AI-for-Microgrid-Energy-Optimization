@@ -1,412 +1,168 @@
-Neuromorphic AI for Microgrid Energy Optimization
+# Neuromorphic AI for Microgrid Energy Optimization
 
-This repository contains a Python implementation of a microgrid energy management system using a Spiking Neural Network (SNN) to optimize energy flows. The system integrates real household power consumption data from the UCI Individual Household Electric Power Consumption dataset and simulated renewable energy data (solar and wind). It models a battery storage system and minimizes energy costs by optimizing load allocation, battery charge/discharge, and grid import/export.
+A cutting-edge Python implementation of a smart microgrid energy management system, powered by **Spiking Neural Networks (SNNs)**. This project uses **neuromorphic AI** to intelligently balance energy flows in a microgrid environment using rAeal energy consumption data and simulated renewable sources.
 
-Features
+---
 
+## 🔍 Overview
 
+This system integrates:
 
+* Real household data from the **UCI Power Consumption Dataset**
+* Simulated **solar** and **wind** renewable energy inputs
+* A dynamic **battery storage model**
+* A **Spiking Neural Network (SNN)** using `snntorch` to optimize energy allocation
 
+The objective is to **minimize energy costs** while ensuring stable power delivery, balancing demand, battery storage, and grid imports/exports.
 
-Data Processing: Downloads and preprocesses household power consumption data and simulates renewable energy data.
+---
 
+## 🚀 Features
 
+* **📊 Data Processing**: Cleans, resamples, and aligns real-world and simulated data
+* **🔋 Battery Model**: Simulates a 5 kWh battery with 95% round-trip efficiency
+* **🧠 SNN Optimization**: Trains an SNN to optimize load vs generation decisions
+* **💸 Cost Minimization**: Integrates dynamic grid prices into the optimization
+* **📈 Visualization**: Plots showing energy flows, battery state, and cost savings
 
-Battery Model: Simulates a 5 kWh battery with 95% efficiency and state-of-charge constraints.
+---
 
+## 🛠️ Installation
 
-
-SNN Optimization: Uses a spiking neural network (via snntorch) to optimize energy flows based on load, renewable generation, battery state, and grid prices.
-
-
-
-Cost Minimization: Incorporates grid prices to minimize energy costs.
-
-
-
-Visualization: Generates plots showing load allocation, renewable generation, battery state, and grid interaction.
-
-Prerequisites
-
-
-
-
-
-Python: Version 3.8 or higher.
-
-
-
-Dependencies:
-
-
-
-
-
-pandas
-
-
-
-numpy
-
-
-
-requests
-
-
-
-snntorch
-
-
-
-torch
-
-
-
-matplotlib
-
-
-
-System Requirements:
-
-
-
-
-
-At least 8GB RAM (due to the large UCI dataset).
-
-
-
-Internet connection for downloading the dataset.
-
-
-
-Optional: GPU for faster SNN training (PyTorch CUDA support).
-
-Installation
-
-
-
-
-
-Clone the Repository:
-
-git clone (https://github.com/Jeevan-hub1/Neuromorphic-AI-for-Microgrid-Energy-Optimization)
+```bash
+git clone https://github.com/Jeevan-hub1/Neuromorphic-AI-for-Microgrid-Energy-Optimization.git
 cd neuromorphic-microgrid-optimization
 
-
-
-Set Up a Virtual Environment (recommended):
-
+# Optional: Set up a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
+# Install required dependencies
+pip install -r requirements.txt
+```
 
+### ✅ Dependencies
 
-Install Dependencies:
+* `pandas`, `numpy`, `matplotlib`
+* `snntorch`, `torch`, `requests`
 
-pip install pandas numpy requests snntorch torch matplotlib
+Ensure PyTorch is installed with:
 
-
-
-Verify PyTorch Installation: Ensure PyTorch is version 2.0 or higher:
-
+```python
 import torch
-print(torch.__version__)
+print(torch.__version__)  # Should be >= 2.0
+```
 
-Usage
+---
 
+## 📦 Usage
 
+Run the full pipeline with:
 
-
-
-Run the Script:
-
+```bash
 python microgrid_optimization.py
+```
 
+The script:
 
+* Downloads the UCI dataset (\~144MB zip, \~2GB uncompressed)
+* Simulates 1 year of solar & wind data
+* Trains an SNN for energy optimization
+* Outputs:
 
-
-
-The script downloads the UCI dataset (~144MB zip, ~2GB uncompressed) to a data folder.
-
-
-
-It generates simulated renewable data and saves it as data/renewable_energy.csv.
-
-
-
-It processes data, simulates a battery, trains the SNN, and optimizes energy flows.
-
-
-
-Outputs include:
-
-
-
-
-
-microgrid_optimization_advanced.png: A four-panel plot showing results.
-
-
-
-predictions.csv: Predicted load, battery, and grid usage.
-
-
-
-Console output with the total energy cost (e.g., $100.00–$1000.00).
-
-
+  * `microgrid_optimization_advanced.png`
+  * `predictions.csv`
 
 Expected Runtime:
 
+* **First run**: \~20 mins (includes data download & training)
+* **Subsequent runs**: \~5–10 mins
 
+---
 
+## 📂 Project Structure
 
-
-First run: ~20 minutes (due to dataset download and extraction).
-
-
-
-Subsequent runs: ~5–10 minutes (depending on hardware and SNN training).
-
-
-
-Training may stop early if loss plateaus (patience=10 epochs).
-
-
-
-Output Files:
-
-
-
-
-
-data/household_power_consumption.txt: Raw UCI dataset.
-
-
-
-data/renewable_energy.csv: Simulated solar and wind data.
-
-
-
-microgrid_optimization_advanced.png: Visualization of results.
-
-
-
-predictions.csv: SNN predictions.
-
-Project Structure
-
+```
 neuromorphic-microgrid-optimization/
-├── data/                           # Folder for datasets
-│   ├── household_power_consumption.txt  # UCI dataset
-│   └── renewable_energy.csv        # Simulated renewable data
-├── microgrid_optimization.py       # Main script
-├── microgrid_optimization_advanced.png  # Output plot
-├── predictions.csv                 # Output predictions
-└── README.md                       # This file
+├── data/
+│   ├── household_power_consumption.txt
+│   └── renewable_energy.csv
+├── microgrid_optimization.py
+├── microgrid_optimization_advanced.png
+├── predictions.csv
+├── requirements.txt
+└── README.md
+```
 
-How It Works
+---
 
+## ⚙️ How It Works
 
+### 🔻 Data
 
+* Real data from [UCI ML Repository](https://archive.ics.uci.edu/ml/datasets/individual+household+electric+power+consumption)
+* Simulated renewable energy (solar & wind)
 
+### 🧼 Preprocessing
 
-Data Download:
+* Hourly resampling
+* Normalization
+* Handling missing values
 
+### 🔋 Battery Model
 
+* 5 kWh capacity
+* 95% round-trip efficiency
+* Constraints on max charge/discharge
 
+### 🔁 SNN Model (via `snntorch`)
 
+* Inputs: Normalized load, solar, wind, battery state, grid prices
+* Outputs: Battery dispatch, grid import/export, load served
+* Optimized with MSE + cost penalty loss function
 
-Downloads the UCI Household Power Consumption dataset (2006–2010, minute-level data).
+### 📊 Visualization
 
+* 4-panel plot:
 
+  * Load
+  * Solar/Wind Generation
+  * Battery SOC
+  * Grid Usage & Cost
 
-Simulates hourly solar and wind data for 2006–2007 to align with UCI data.
+---
 
+## ⚠️ Troubleshooting
 
+* **Corrupted Load Data**: Re-delete the `data/` folder and rerun
+* **Tensor Shape Errors**: Ensure snntorch and torch versions match
+* **Memory Issues**: Close apps or reduce dataset duration
 
-Preprocessing:
+---
 
+## 💡 Future Work
 
+* Integrate real solar/wind data via NREL API
+* Add test/train split and validation metrics
+* Model battery degradation and weather impact
+* Use DataLoader for batch SNN training
 
+---
 
+## 📬 Contact
 
-Resamples data to hourly, aligns time indices, and normalizes to [0, 1].
+**Author**: Jeevan Reddy Ponnala
+For questions: [nandakumarponnala@gmail.com](mailto:nandakumarponnala@gmail.com)
+GitHub: [github.com/Jeevan-hub1](https://github.com/Jeevan-hub1)
 
+---
 
 
-Handles missing values and edge cases (e.g., NaN, identical values).
 
+---
 
+## 🙏 Acknowledgments
 
-Battery Simulation:
-
-
-
-
-
-Models a 5 kWh battery with 95% efficiency, charging from excess renewables and discharging to meet load.
-
-
-
-SNN Optimization:
-
-
-
-
-
-Uses a three-layer SNN with Leaky Integrate-and-Fire neurons and dropout (0.2).
-
-
-
-Inputs: Normalized load, solar, wind, battery state, grid prices.
-
-
-
-Outputs: Load allocation, battery charge/discharge, grid import/export.
-
-
-
-Trains for up to 100 epochs with early stopping, minimizing MSE and grid costs.
-
-
-
-Visualization:
-
-
-
-
-
-Plots load allocation, renewable generation, battery state, and grid interaction.
-
-
-
-Shows total energy cost in the grid panel title.
-
-Troubleshooting
-
-
-
-
-
-Load Data Issues:
-
-
-
-
-
-If Load: [0.0000, 0.0000] appears, the UCI dataset may be corrupted. Delete data/ and re-run.
-
-
-
-Check data/household_power_consumption.txt for missing Global_active_power values.
-
-
-
-Shape Errors:
-
-
-
-
-
-Ensure tensor shapes match (printed during training). If not, verify snntorch and torch versions.
-
-
-
-Memory Errors:
-
-
-
-
-
-The UCI dataset is large. Close other applications or use a system with more RAM.
-
-
-
-Dependency Issues:
-
-
-
-
-
-Update dependencies: pip install --upgrade snntorch torch pandas numpy matplotlib requests.
-
-
-
-Verify PyTorch: python -c "import torch; print(torch.__version__)".
-
-Future Improvements
-
-
-
-
-
-Replace simulated renewable data with real NREL data (e.g., via NREL API).
-
-
-
-Add train/test split for SNN validation.
-
-
-
-Tune SNN hyperparameters (e.g., hidden layer sizes, learning rate).
-
-
-
-Parallelize training with mini-batches using torch.DataLoader.
-
-
-
-Model battery degradation or temperature effects.
-
-Contributing
-
-Contributions are welcome! Please:
-
-
-
-
-
-Fork the repository.
-
-
-
-Create a feature branch (git checkout -b feature-name).
-
-
-
-Commit changes (git commit -m "Add feature").
-
-
-
-Push to the branch (git push origin feature-name).
-
-
-
-Open a pull request.
-
-License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Acknowledgments
-
-
-
-
-
-UCI Machine Learning Repository for the household power consumption dataset.
-
-
-
-snntorch for spiking neural network support.
-
-
-
-PyTorch for deep learning framework.
-
-Contact
-
-For questions or issues, please open an issue on GitHub or contact nandakumarponnala@gmail.com.
-
+* [UCI ML Repository](https://archive.ics.uci.edu)
+* [snntorch](https://snntorch.readthedocs.io)
+* [PyTorch](https://pytorch.org)
